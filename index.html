@@ -1,1 +1,131 @@
-ddd
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>三国杀武将故事集</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      margin: 0;
+      background: #f6f7f9;
+      color: #222;
+    }
+    header {
+      background: #1f2937;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 70px);
+    }
+    nav {
+      background: #fff;
+      border-right: 1px solid #e5e7eb;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    nav h3 {
+      margin-top: 16px;
+      font-size: 16px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 4px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0;
+    }
+    nav li {
+      padding: 6px 8px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    nav li:hover {
+      background: #f0f2f5;
+    }
+    article {
+      padding: 32px;
+      max-width: 900px;
+    }
+    article h2 {
+      margin-top: 0;
+    }
+    .meta {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>三国杀 · 武将故事集</h1>
+    <p>基于技能设定的长篇人物故事（起承转合）</p>
+  </header>
+
+  <main>
+    <nav id="nav"></nav>
+    <article id="content">
+      <h2>欢迎</h2>
+      <p>请选择左侧武将，开始阅读故事。</p>
+    </article>
+  </main>
+
+  <script>
+    // 示例数据结构（后续你可以不断往这里加 100×4 个武将）
+    const data = {
+      "魏": [
+        {
+          name: "曹操",
+          skill: "奸雄",
+          story: `【起】\n官渡之夜，大雨如注。曹操立于军帐之外，任雨水打湿披风。\n\n【承】\n粮草被焚，众将动摇。曹操却下令收集战死者的兵器与甲胄，重新分配——敌人的失误，正是他的资源。\n\n【转】\n当夜突袭，曹操亲临前线，以伤换势。士卒震撼：主公受创，却越战越强。\n\n【合】\n战后，曹操抚剑而笑：世人只见我用人之失，却不知我以失为雄。`
+        }
+      ],
+      "蜀": [
+        {
+          name: "诸葛亮",
+          skill: "观星",
+          story: `【起】\n五丈原，夜。诸葛亮仰望星河，灯火微摇。\n\n【承】\n他反复推演军情，星象在脑海中重排，未来数日的胜负已成定数。\n\n【转】\n魏军异动，众将慌乱。诸葛亮却提前调兵，仿佛早已看见这一刻。\n\n【合】\n天意难违，人谋可尽。观星者，非看天命，而是争那一线生机。`
+        }
+      ],
+      "吴": [],
+      "群": []
+    };
+
+    const nav = document.getElementById('nav');
+    const content = document.getElementById('content');
+
+    function renderNav() {
+      nav.innerHTML = '';
+      for (const camp in data) {
+        const h3 = document.createElement('h3');
+        h3.textContent = camp;
+        nav.appendChild(h3);
+
+        const ul = document.createElement('ul');
+        data[camp].forEach((hero) => {
+          const li = document.createElement('li');
+          li.textContent = hero.name;
+          li.onclick = () => renderStory(camp, hero);
+          ul.appendChild(li);
+        });
+        nav.appendChild(ul);
+      }
+    }
+
+    function renderStory(camp, hero) {
+      content.innerHTML = `
+        <h2>${hero.name}</h2>
+        <div class="meta">阵营：${camp} ｜ 技能：${hero.skill}</div>
+        <pre style="white-space: pre-wrap; line-height: 1.8;">${hero.story}</pre>
+      `;
+    }
+
+    renderNav();
+  </script>
+</body>
+</html>
